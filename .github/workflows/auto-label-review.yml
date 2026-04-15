@@ -1,8 +1,12 @@
-name: Auto Label on Review
+name: Auto Label PRs
 
 on:
+  pull_request_target:
+    types: [opened]
   pull_request_review:
     types: [submitted, dismissed]
+  issue_comment:
+    types: [created]
 
 permissions:
   pull-requests: write
@@ -12,34 +16,61 @@ jobs:
   label:
     runs-on: ubuntu-latest
     steps:
-      - name: Add needs-revision label on request-changes
-        if: github.event.review.state == 'changes_requested'
+      - name: Handle PR Labels
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.LABEL_PAT }}
           script: |
-            await github.rest.issues.addLabels({
-              owner: context.repo.owner,
-              repo:  context.repo.repo,
-              issue_number: context.payload.pull_request.number,
-              labels: ['needs-revision'],
-            });
-            await github.rest.issues.removeLabel({
-              owner: context.repo.owner,
-              repo:  context.repo.repo,
-              issue_number: context.payload.pull_request.number,
-              name: 'complete',
-            }).catch(() => {});
+            const eventName = context.eventName;
+            const payload = context.payload;
+            
+            async function setLabel(issue_number, labelToAdd, labelsToRemove) {
+              const { data: labels } = await github.rest.issues.listLabelsOnIssue({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue_number
+              });
+              const currentLabels = labels.map(l => l.name);
+              
+              for (const toRemove of labelsToRemove) {
+                if (currentLabels.includes(toRemove)) {
+                  await github.rest.issues.removeLabel({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: issue_number,
+                    name: toRemove
+                  }).catch(() => {});
+                }
+              }
+              
+              if (labelToAdd && !currentLabels.includes(labelToAdd)) {
+                await github.rest.issues.addLabels({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issue_number,
+                  labels: [labelToAdd]
+                });
+              }
+            }
 
-      - name: Remove needs-revision label on dismissed review
-        if: github.event.review.state == 'dismissed'
-        uses: actions/github-script@v7
-        with:
-          github-token: ${{ secrets.LABEL_PAT }}
-          script: |
-            await github.rest.issues.removeLabel({
-              owner: context.repo.owner,
-              repo:  context.repo.repo,
-              issue_number: context.payload.pull_request.number,
-              name: 'needs-revision',
-            }).catch(() => {});
+            if (eventName === 'pull_request_target' && payload.action === 'opened') {
+               await setLabel(payload.pull_request.number, 'submitted', []);
+            }
+            else if (eventName === 'pull_request_review') {
+               const state = payload.review.state;
+               if (state === 'changes_requested') {
+                  await setLabel(payload.pull_request.number, 'needs-revision', ['submitted', 'complete']);
+               } else if (state === 'approved') {
+                  await setLabel(payload.pull_request.number, 'complete', ['submitted', 'needs-revision']);
+               } else if (state === 'dismissed') {
+                  await setLabel(payload.pull_request.number, null, ['needs-revision']);
+               }
+            }
+            else if (eventName === 'issue_comment') {
+               if (!payload.issue.pull_request) return;
+               
+               const commenter = payload.comment.user.login;
+               if (commenter === context.repo.owner || commenter === 'gitnotebooks') {
+                  await setLabel(payload.issue.number, 'needs-revision', ['submitted', 'complete']);
+               }
+            }
