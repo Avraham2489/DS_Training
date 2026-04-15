@@ -16,6 +16,7 @@ jobs:
         if: github.event.review.state == 'changes_requested'
         uses: actions/github-script@v7
         with:
+          github-token: ${{ secrets.LABEL_PAT }}
           script: |
             await github.rest.issues.addLabels({
               owner: context.repo.owner,
@@ -34,6 +35,7 @@ jobs:
         if: github.event.review.state == 'dismissed'
         uses: actions/github-script@v7
         with:
+          github-token: ${{ secrets.LABEL_PAT }}
           script: |
             await github.rest.issues.removeLabel({
               owner: context.repo.owner,
