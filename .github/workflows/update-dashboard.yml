@@ -1,7 +1,7 @@
 name: Update Progress Dashboard
 
 on:
-  pull_request:
+  pull_request_target:
     types: [opened, labeled, unlabeled, closed, reopened]
   push:
     branches: [main]
