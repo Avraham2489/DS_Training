@@ -8,6 +8,7 @@ on:
     paths:
       - trainees.csv
       - exams_results.csv
+      - manual_completions.csv
       - scripts/**
   workflow_dispatch:
 
