@@ -1,0 +1,4 @@
+See:
+https://github.com/rougier/numpy-100
+
+# todo we should make it a git submodule
