@@ -1,0 +1,23 @@
+name: Trigger Dashboard Update on PR Events
+
+on:
+  pull_request_target:
+    types: [opened, labeled, unlabeled, closed, reopened]
+
+permissions:
+  actions: write
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger dashboard update
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo:  context.repo.repo,
+              workflow_id: 'update-dashboard.yml',
+              ref: 'main',
+            });

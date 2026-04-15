@@ -1,8 +1,6 @@
 name: Update Progress Dashboard
 
 on:
-  pull_request_target:
-    types: [opened, labeled, unlabeled, closed, reopened]
   push:
     branches: [main]
     paths:
@@ -14,8 +12,6 @@ on:
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
   pull-requests: read
 
 jobs:
@@ -23,6 +19,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
 
       - uses: actions/setup-python@v5
         with:
@@ -42,4 +40,4 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add docs/index.html
           git diff --cached --quiet || git commit -m "chore: update dashboard [skip ci]"
-          git push origin HEAD:main
+          git push
