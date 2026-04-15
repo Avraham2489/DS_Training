@@ -11,7 +11,6 @@ Training materials for the Data Science program.
 - [PR Title Format](#pr-title-format)
 - [Getting New Material](#getting-new-material)
 - [Exams](#exams)
-- [Common Problems](#common-problems)
 
 ---
 
@@ -95,7 +94,6 @@ Every Pull Request title must follow this exact format: `[your-username] Module 
 
 | Module | PR title example |
 |---|---|
-| A - Git | `[alice123] Module A` |
 | B - Python Basics | `[alice123] Module B - Python Basics` |
 | B - Python Advanced | `[alice123] Module B - Python Advanced` |
 | B - NumPy | `[alice123] Module B - NumPy` |
