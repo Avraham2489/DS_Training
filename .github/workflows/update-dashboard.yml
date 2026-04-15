@@ -1,0 +1,44 @@
+name: Update Progress Dashboard
+
+on:
+  pull_request:
+    types: [opened, labeled, unlabeled, closed, reopened]
+  push:
+    branches: [main]
+    paths:
+      - trainees.csv
+      - exams_results.csv
+      - scripts/**
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+  pull-requests: read
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Generate dashboard
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/generate_dashboard.py
+
+      - name: Commit generated dashboard
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/index.html
+          git diff --cached --quiet || git commit -m "chore: update dashboard [skip ci]"
+          git push

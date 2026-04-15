@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git branch:*)",
+      "Bash(git push:*)",
+      "Bash(git -C \"/c/Users/user/Desktop/DS_Training\" log --oneline -10)",
+      "Bash(git -C \"/c/Users/user/Desktop/DS_Training\" branch -a)",
+      "Bash(python scripts/generate_dashboard.py)"
+    ]
+  }
+}

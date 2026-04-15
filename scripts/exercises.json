@@ -1,0 +1,74 @@
+[
+  {
+    "key": "A-git",
+    "label": "A - Git",
+    "pr_keyword": "Module A",
+    "type": "exercise"
+  },
+  {
+    "key": "B-python-basics",
+    "label": "B - Python Basics",
+    "pr_keyword": "Module B - Python Basics",
+    "type": "exercise"
+  },
+  {
+    "key": "B-python-advanced",
+    "label": "B - Python Advanced",
+    "pr_keyword": "Module B - Python Advanced",
+    "type": "exercise"
+  },
+  {
+    "key": "B-numpy",
+    "label": "B - NumPy",
+    "pr_keyword": "Module B - NumPy",
+    "type": "exercise"
+  },
+  {
+    "key": "B-pandas",
+    "label": "B - Pandas",
+    "pr_keyword": "Module B - Pandas",
+    "type": "exercise"
+  },
+  {
+    "key": "C-statistics",
+    "label": "C - Statistics",
+    "pr_keyword": "Module C",
+    "type": "exercise"
+  },
+  {
+    "key": "D-regression",
+    "label": "D - Regression",
+    "pr_keyword": "Module D - Regression",
+    "type": "exercise"
+  },
+  {
+    "key": "D-supervised",
+    "label": "D - Supervised",
+    "pr_keyword": "Module D - Supervised",
+    "type": "exercise"
+  },
+  {
+    "key": "D-unsupervised",
+    "label": "D - Unsupervised",
+    "pr_keyword": "Module D - Unsupervised",
+    "type": "exercise"
+  },
+  {
+    "key": "Optional-visualization",
+    "label": "Optional - Visualization",
+    "pr_keyword": "Optional - Visualization",
+    "type": "exercise"
+  },
+  {
+    "key": "exam_python",
+    "label": "Exam - Python",
+    "pr_keyword": null,
+    "type": "exam"
+  },
+  {
+    "key": "exam_statistics",
+    "label": "Exam - Statistics",
+    "pr_keyword": null,
+    "type": "exam"
+  }
+]
