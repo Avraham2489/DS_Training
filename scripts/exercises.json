@@ -18,15 +18,6 @@
     "optional": false
   },
   {
-    "key": "B-python-advanced",
-    "label": "Python Advanced",
-    "pr_keyword": "Module B - Python Advanced",
-    "type": "exercise",
-    "section": "B",
-    "section_label": "B - Python",
-    "optional": false
-  },
-  {
     "key": "B-numpy",
     "label": "NumPy",
     "pr_keyword": "Module B - NumPy",
@@ -46,7 +37,16 @@
   },
   {
     "key": "exam_python",
-    "label": "Exam",
+    "label": "Python",
+    "pr_keyword": null,
+    "type": "exam",
+    "section": "B",
+    "section_label": "B - Python",
+    "optional": false
+  },
+  {
+    "key": "exam_pandas_numpy",
+    "label": "NumPy+Pandas",
     "pr_keyword": null,
     "type": "exam",
     "section": "B",
@@ -64,7 +64,7 @@
   },
   {
     "key": "exam_statistics",
-    "label": "Exam",
+    "label": "Statistics",
     "pr_keyword": null,
     "type": "exam",
     "section": "C",
@@ -90,6 +90,15 @@
     "optional": false
   },
   {
+    "key": "exam_supervised",
+    "label": "Supervised",
+    "pr_keyword": null,
+    "type": "exam",
+    "section": "D",
+    "section_label": "D - ML",
+    "optional": false
+  },
+  {
     "key": "D-unsupervised",
     "label": "Unsupervised",
     "pr_keyword": "Module D - Unsupervised",
@@ -99,9 +108,27 @@
     "optional": false
   },
   {
+    "key": "exam_unsupervised",
+    "label": "Unsupervised",
+    "pr_keyword": null,
+    "type": "exam",
+    "section": "D",
+    "section_label": "D - ML",
+    "optional": false
+  },
+  {
     "key": "Optional-visualization",
     "label": "Visualization",
     "pr_keyword": "Optional - Visualization",
+    "type": "exercise",
+    "section": "Optional",
+    "section_label": "Optional",
+    "optional": true
+  },
+  {
+    "key": "B-python-advanced",
+    "label": "Python Advanced",
+    "pr_keyword": "Module B - Python Advanced",
     "type": "exercise",
     "section": "Optional",
     "section_label": "Optional",

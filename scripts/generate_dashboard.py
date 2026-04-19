@@ -194,7 +194,9 @@ def main():
                 f"background:{light};font-size:11px;padding:6px 10px;"
                 f"white-space:nowrap;color:#333;font-weight:600;{border}"
             )
-            label = f"📝 Exam" if is_exam else ex["label"]
+            label = f"📝 {ex['label']}" if is_exam else ex["label"]
+            if ex["optional"] and not is_exam:
+                label += ' <span style="font-weight:400;opacity:.65">(opt)</span>'
             hdr2.append(f'<th style="{style}">{label}</th>')
 
     # ── data rows ─────────────────────────────────────────────────────────────
