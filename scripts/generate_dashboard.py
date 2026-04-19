@@ -73,7 +73,7 @@ def cell_html(status: str, is_exam: bool = False) -> str:
     border_left = "border-left:2px solid #ccc;" if is_exam else ""
     return (
         f'<td style="background:{bg};color:{fg};text-align:center;'
-        f'font-weight:bold;padding:10px 14px;font-size:15px;{border_left}">'
+        f'font-weight:bold;padding:10px 0;font-size:15px;{border_left}">'
         f'{icon}</td>'
     )
 
@@ -176,7 +176,7 @@ def main():
         )
     hdr1.append(
         '<th rowspan="2" style="padding:12px 16px;text-align:center;'
-        'background:#263238;color:white;min-width:140px;border-left:3px solid white;'
+        'background:#263238;color:white;min-width:120px;border-left:3px solid white;'
         'vertical-align:bottom">Progress</th>'
     )
 
@@ -190,14 +190,19 @@ def main():
         for i, ex in enumerate(items):
             is_exam = ex["type"] == "exam"
             border  = f"border-left:2px solid {bg};" if is_exam else ""
-            style   = (
-                f"background:{light};font-size:11px;padding:6px 10px;"
-                f"white-space:nowrap;color:#333;font-weight:600;{border}"
+            th_style = (
+                f"width:40px;vertical-align:bottom;padding:0 0 6px 0;"
+                f"background:{light};{border}"
+            )
+            span_style = (
+                f"display:inline-block;writing-mode:vertical-rl;"
+                f"transform:rotate(180deg);font-size:11px;font-weight:600;"
+                f"color:#333;white-space:nowrap;padding:4px 2px;"
             )
             label = f"📝 {ex['label']}" if is_exam else ex["label"]
             if ex["optional"] and not is_exam:
-                label += ' <span style="font-weight:400;opacity:.65">(opt)</span>'
-            hdr2.append(f'<th style="{style}">{label}</th>')
+                label += " (opt)"
+            hdr2.append(f'<th style="{th_style}"><span style="{span_style}">{label}</span></th>')
 
     # ── data rows ─────────────────────────────────────────────────────────────
     rows_html = []
@@ -292,7 +297,7 @@ def main():
       border-radius: 10px;
       box-shadow: 0 2px 16px rgba(0,0,0,.1);
     }}
-    table {{ border-collapse: collapse; background: white; width: 100%; }}
+    table {{ border-collapse: collapse; background: white; width: 100%; min-width: 0; }}
     th, td {{ border: 1px solid #e0e0e0; }}
     tbody tr {{ transition: background .15s; }}
     tbody tr:hover td {{ filter: brightness(0.96); }}
