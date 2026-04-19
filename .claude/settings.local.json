@@ -5,7 +5,27 @@
       "Bash(git push:*)",
       "Bash(git -C \"/c/Users/user/Desktop/DS_Training\" log --oneline -10)",
       "Bash(git -C \"/c/Users/user/Desktop/DS_Training\" branch -a)",
-      "Bash(python scripts/generate_dashboard.py)"
+      "Bash(python scripts/generate_dashboard.py)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git pull *)",
+      "Bash(git stash *)",
+      "Bash(gh pr *)",
+      "Bash(curl -s \"https://api.github.com/repos/Avraham2489/DS_Training/pulls?state=all&per_page=30\")",
+      "Bash(python3 -c \"import json,sys; prs=json.load\\(sys.stdin\\); [print\\(f\\\\\"#{p['number']} {p['title']} [{p['state']}]\\\\\"\\) for p in prs]\")",
+      "Bash(curl -s \"https://api.github.com/repos/Avraham2489/DS_Training/pulls/2/reviews\")",
+      "Bash(python3 -c \"import json,sys; reviews=json.load\\(sys.stdin\\); [print\\(f\\\\\"state={r['state']} user={r['user']['login']} submitted={r['submitted_at']} body={r['body'][:100]}\\\\\"\\) for r in reviews]\")",
+      "Bash(curl -s \"https://api.github.com/repos/Avraham2489/DS_Training/pulls/2\")",
+      "Bash(python3 -c \"import json,sys; pr=json.load\\(sys.stdin\\); print\\(f\\\\\"title={pr['title']}\\\\nstate={pr['state']}\\\\ndraft={pr['draft']}\\\\nmerged={pr.get\\('merged',False\\)}\\\\nlabels={[l['name'] for l in pr['labels']]}\\\\nbase={pr['base']['ref']}\\\\nhead={pr['head']['ref']}\\\\ncreated={pr['created_at']}\\\\nupdated={pr['updated_at']}\\\\n\\\\\"\\)\")",
+      "Bash(curl -s 'https://api.github.com/repos/Avraham2489/DS_Training/pulls/2')",
+      "Bash(curl -s \"https://api.github.com/repos/Avraham2489/DS_Training/statuses/$\\(curl -s 'https://api.github.com/repos/Avraham2489/DS_Training/pulls/2')",
+      "Bash(python3 -c \"import json,sys; statuses=json.load\\(sys.stdin\\); [print\\(f\\\\\"state={s['state']} context={s['context']} desc={s['description']}\\\\\"\\) for s in statuses[:10]] if isinstance\\(statuses,list\\) else print\\(statuses\\)\")",
+      "Bash(curl -s \"https://api.github.com/repos/Avraham2489/DS_Training/commits/1a72effb3e361178d16bdd435874af1a4d21b16e/check-runs\")",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); [print\\(f\\\\\"name={r['name']} status={r['status']} conclusion={r['conclusion']}\\\\\"\\) for r in d.get\\('check_runs',[]\\)]\")",
+      "Bash(python3 -c \" import json,sys d=json.load\\(sys.stdin\\) for r in d.get\\('check_runs',[]\\): print\\(f\\\\\"=== {r['name']} ===\\\\\"\\) print\\(f\\\\\"status={r['status']} conclusion={r['conclusion']}\\\\\"\\) print\\(f\\\\\"output: {r['output']['title']} - {r['output']['summary']}\\\\\"\\) print\\(\\) \")",
+      "Bash(curl -s \"https://api.github.com/repos/Avraham2489/DS_Training/actions/runs?branch=pandas3&per_page=10\")",
+      "Bash(python3 -c \" import json,sys d=json.load\\(sys.stdin\\) for r in d.get\\('workflow_runs',[]\\): print\\(f\\\\\"id={r['id']} name={r['name']} status={r['status']} conclusion={r['conclusion']} event={r['event']} created={r['created_at']}\\\\\"\\) \")",
+      "Bash(git commit *)"
     ]
   }
 }

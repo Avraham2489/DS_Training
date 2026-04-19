@@ -19,7 +19,7 @@ jobs:
       - name: Handle PR Labels
         uses: actions/github-script@v7
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.LABEL_PAT || github.token }}
           script: |
             const eventName = context.eventName;
             const payload = context.payload;
