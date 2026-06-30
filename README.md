@@ -94,14 +94,19 @@ Every Pull Request title must follow this exact format: `[your-username] Module 
 
 | Module | PR title example |
 |---|---|
+| Apollo | `[alice123] Module Apollo` |
 | B - Python Basics | `[alice123] Module B - Python Basics` |
 | B - Python Advanced | `[alice123] Module B - Python Advanced` |
 | B - NumPy | `[alice123] Module B - NumPy` |
 | B - Pandas | `[alice123] Module B - Pandas` |
-| C - Statistics | `[alice123] Module C` |
+| C - Statistics (assignment) | `[alice123] Module C` |
 | D - Regression | `[alice123] Module D - Regression` |
 | D - Supervised | `[alice123] Module D - Supervised` |
 | D - Unsupervised | `[alice123] Module D - Unsupervised` |
+| E - Anomaly Detection | `[alice123] Module E - Anomaly` |
+| E - Generative Models | `[alice123] Module E - Generative` |
+| E - Loss & Train Splits | `[alice123] Module E - Loss` |
+| E - Part 1 + Part 2 | `[alice123] Module E - Part` |
 | Optional - Visualization | `[alice123] Optional - Visualization` |
 
 ---
@@ -125,6 +130,41 @@ git push origin main
 Exams are **written and held in person** — do not submit them through GitHub.
 
 Exam results are marked by the instructor and will appear automatically on the progress dashboard.
+
+---
+
+## Learning Tracks (for the instructor)
+
+Each trainee follows a **track** — a subset of the modules. The dashboard computes progress
+against the trainee's assigned track, and modules outside the track appear as blank, hatched cells.
+
+**1. Define tracks** in [`scripts/tracks.json`](scripts/tracks.json). Each track is a label plus a
+list of exercise `key`s (the keys come from [`scripts/exercises.json`](scripts/exercises.json)):
+
+```json
+{
+  "beginner":     { "label": "חוקר מתחיל",  "items": ["apollo", "A-git", "..."] },
+  "experienced":  { "label": "חוקר מנוסה",  "items": ["D-regression", "..."] },
+  "performance":  { "label": "חוקר ביצועים", "items": ["A-git", "C-statistics", "..."] }
+}
+```
+
+Built-in tracks: `beginner` (everything), `experienced` (starts at Regression, no Apollo/Git/Python/Statistics),
+`performance` (full Statistics, no Deep Learning), and `full` (all modules — the default).
+
+**2. Assign a track** per trainee with the `track` column in [`trainees.csv`](trainees.csv).
+Leave it blank to default to `full` (everyone gets every module).
+
+**3. Per-trainee tweaks** (optional) in [`path_overrides.csv`](path_overrides.csv) — add or remove a single
+module on top of the assigned track:
+
+```
+github_username,key,action
+idobara,Optional-visualization,add
+idobara,E-generative,remove
+```
+
+The dashboard regenerates automatically when these files change.
 
 
 *For questions, contact the instructor directly or leave a comment on your PR.*

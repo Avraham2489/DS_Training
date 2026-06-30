@@ -20,7 +20,9 @@ ROOT           = Path(__file__).parent.parent
 TRAINEES_CSV   = ROOT / "trainees.csv"
 EXAMS_CSV      = ROOT / "exams_results.csv"
 MANUAL_CSV     = ROOT / "manual_completions.csv"
+OVERRIDES_CSV  = ROOT / "path_overrides.csv"
 EXERCISES_JSON = ROOT / "scripts" / "exercises.json"
+TRACKS_JSON    = ROOT / "scripts" / "tracks.json"
 OUTPUT_HTML    = ROOT / "docs" / "index.html"
 
 STATUS_ORDER = ["complete", "needs-revision", "submitted", ""]
@@ -35,12 +37,17 @@ STATUS_STYLE = {
 }
 
 SECTION_COLORS = {
+    "Apollo":   {"bg": "#ad1457", "light": "#fce4ec"},
     "A":        {"bg": "#1565c0", "light": "#e3f2fd"},
     "B":        {"bg": "#6a1b9a", "light": "#f3e5f5"},
     "C":        {"bg": "#00695c", "light": "#e0f2f1"},
     "D":        {"bg": "#e65100", "light": "#fff3e0"},
+    "E":        {"bg": "#283593", "light": "#e8eaf6"},
     "Optional": {"bg": "#546e7a", "light": "#eceff1"},
 }
+
+# label icons by exercise type (status cells use STATUS_STYLE instead)
+TYPE_ICON = {"exam": "📝", "assignment": "📋"}
 
 # ── helpers ───────────────────────────────────────────────────────────────────
 
@@ -68,9 +75,17 @@ def load_csv(path: Path) -> list[dict]:
     return rows
 
 
-def cell_html(status: str, is_exam: bool = False) -> str:
-    icon, bg, fg = STATUS_STYLE.get(status, STATUS_STYLE[""])
+def cell_html(status: str, is_exam: bool = False, assigned: bool = True) -> str:
     border_left = "border-left:2px solid #ccc;" if is_exam else ""
+    if not assigned:
+        # module is not part of this trainee's track — render a muted, empty cell
+        # (visually distinct from "—" which means assigned-but-not-submitted)
+        return (
+            f'<td style="background:repeating-linear-gradient(45deg,#fafafa,'
+            f'#fafafa 4px,#f0f0f0 4px,#f0f0f0 8px);{border_left}">'
+            f'</td>'
+        )
+    icon, bg, fg = STATUS_STYLE.get(status, STATUS_STYLE[""])
     return (
         f'<td style="background:{bg};color:{fg};text-align:center;'
         f'font-weight:bold;padding:10px 14px;font-size:15px;{border_left}">'
@@ -118,6 +133,33 @@ def main():
         manual_overrides.setdefault(row["github_username"], {})[row["key"]] = row["status"].strip()
 
     exercises: list[dict] = json.loads(EXERCISES_JSON.read_text(encoding="utf-8"))
+    all_keys = {ex["key"] for ex in exercises}
+
+    # named learning tracks (template → list of exercise keys)
+    tracks: dict[str, dict] = {}
+    if TRACKS_JSON.exists():
+        tracks = json.loads(TRACKS_JSON.read_text(encoding="utf-8"))
+
+    # per-trainee add/remove adjustments on top of the assigned track
+    path_overrides: dict[str, dict[str, set]] = {}
+    if OVERRIDES_CSV.exists():
+        for row in load_csv(OVERRIDES_CSV):
+            user = row["github_username"]
+            action = row["action"].strip().lower()
+            entry = path_overrides.setdefault(user, {"add": set(), "remove": set()})
+            if action in entry:
+                entry[action].add(row["key"])
+
+    def assigned_keys(trainee: dict) -> set:
+        """Resolve the set of exercise keys assigned to a trainee:
+        base = track items (or every key if track is missing/empty), then apply add/remove."""
+        track_name = (trainee.get("track") or "").strip()
+        track = tracks.get(track_name)
+        keys = set(track["items"]) if track else set(all_keys)
+        ov = path_overrides.get(trainee["github_username"], {})
+        keys |= ov.get("add", set())
+        keys -= ov.get("remove", set())
+        return keys & all_keys
 
     # fetch all PRs once
     pr_list = []
@@ -155,9 +197,6 @@ def main():
             }
         section_map[sec]["items"].append(ex)
 
-    countable = [ex for ex in exercises if not ex["optional"]]
-    total_items = len(countable)
-
     # ── header row 1: section spans ───────────────────────────────────────────
     hdr1 = [
         '<th rowspan="2" style="padding:12px 16px;text-align:left;'
@@ -194,7 +233,8 @@ def main():
                 f"background:{light};font-size:11px;padding:6px 10px;"
                 f"white-space:nowrap;color:#333;font-weight:600;{border}"
             )
-            label = f"📝 {ex['label']}" if is_exam else ex["label"]
+            type_icon = TYPE_ICON.get(ex["type"], "")
+            label = f"{type_icon} {ex['label']}" if type_icon else ex["label"]
             if ex["optional"] and not is_exam:
                 label += ' <span style="font-weight:400;opacity:.65">(opt)</span>'
             hdr2.append(f'<th style="{style}">{label}</th>')
@@ -207,6 +247,8 @@ def main():
         user_prs  = prs_by_user.get(username, [])
         exam_row  = exams_by_user.get(username, {})
         user_manual = manual_overrides.get(username, {})
+        user_keys = assigned_keys(t)
+        user_total = sum(1 for ex in exercises if not ex["optional"] and ex["key"] in user_keys)
 
         done = 0
         cells = []
@@ -214,6 +256,10 @@ def main():
         for sec in seen_sections:
             for ex in section_map[sec]["items"]:
                 is_exam = ex["type"] == "exam"
+
+                if ex["key"] not in user_keys:
+                    cells.append(cell_html("", is_exam, assigned=False))
+                    continue
 
                 if ex["key"] in user_manual:
                     status = user_manual[ex["key"]]
@@ -229,7 +275,7 @@ def main():
                 if not ex["optional"] and status in ("complete", "pass"):
                     done += 1
 
-        pct = round(done / total_items * 100) if total_items else 0
+        pct = round(done / user_total * 100) if user_total else 0
 
         trainee_cell = (
             f'<td style="padding:10px 16px;white-space:nowrap;background:white;'
@@ -241,7 +287,7 @@ def main():
         progress_cell = (
             f'<td style="padding:10px 16px;text-align:center;background:white;'
             f'border-left:3px solid #e0e0e0;vertical-align:middle">'
-            f'{progress_bar_html(pct, done, total_items)}'
+            f'{progress_bar_html(pct, done, user_total)}'
             f'</td>'
         )
 
@@ -256,6 +302,8 @@ def main():
         ("⏳ submitted",        "#cce5ff", "#004085"),
         ("✘ fail",             "#f8d7da", "#721c24"),
         ("— not submitted",    "#f8f9fa", "#9e9e9e"),
+        ("not in track",       "repeating-linear-gradient(45deg,#fafafa,#fafafa 4px,#f0f0f0 4px,#f0f0f0 8px)", "#9e9e9e"),
+        ("📝 exam &nbsp; 📋 assignment", "#ffffff", "#555"),
     ]
     legend_html = "".join(
         f'<span style="background:{bg};color:{fg};padding:4px 12px;'

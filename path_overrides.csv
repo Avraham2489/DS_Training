@@ -1,0 +1,5 @@
+# Per-trainee adjustments on top of their assigned track (trainees.csv).
+# action = add  -> include this module in the trainee's path
+# action = remove -> exclude this module from the trainee's path
+# key must match a "key" in scripts/exercises.json
+github_username,key,action

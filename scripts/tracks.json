@@ -1,0 +1,52 @@
+{
+  "beginner": {
+    "label": "חוקר מתחיל",
+    "items": [
+      "apollo", "exam_apollo",
+      "A-git",
+      "B-python-basics", "exam_python",
+      "B-numpy", "B-pandas", "exam_pandas_numpy",
+      "C-statistics", "exam_statistics",
+      "D-regression", "exam_regression",
+      "D-supervised", "exam_supervised",
+      "D-unsupervised", "exam_unsupervised",
+      "E-anomaly", "E-generative", "E-loss-splits", "E-part1-2", "exam_deep"
+    ]
+  },
+  "experienced": {
+    "label": "חוקר מנוסה",
+    "items": [
+      "D-regression", "exam_regression",
+      "D-supervised", "exam_supervised",
+      "D-unsupervised", "exam_unsupervised",
+      "E-anomaly", "E-generative", "E-loss-splits", "E-part1-2", "exam_deep"
+    ]
+  },
+  "performance": {
+    "label": "חוקר ביצועים",
+    "items": [
+      "A-git",
+      "B-python-basics", "exam_python",
+      "B-numpy", "B-pandas", "exam_pandas_numpy",
+      "C-statistics", "exam_statistics",
+      "D-regression", "exam_regression",
+      "D-supervised", "exam_supervised",
+      "D-unsupervised", "exam_unsupervised"
+    ]
+  },
+  "full": {
+    "label": "DS מלא",
+    "items": [
+      "apollo", "exam_apollo",
+      "A-git",
+      "B-python-basics", "exam_python",
+      "B-numpy", "B-pandas", "exam_pandas_numpy",
+      "C-statistics", "exam_statistics",
+      "D-regression", "exam_regression",
+      "D-supervised", "exam_supervised",
+      "D-unsupervised", "exam_unsupervised",
+      "E-anomaly", "E-generative", "E-loss-splits", "E-part1-2", "exam_deep",
+      "Optional-visualization", "B-python-advanced"
+    ]
+  }
+}

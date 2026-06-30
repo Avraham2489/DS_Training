@@ -1,5 +1,23 @@
 [
   {
+    "key": "apollo",
+    "label": "Apollo",
+    "pr_keyword": "Module Apollo",
+    "type": "exercise",
+    "section": "Apollo",
+    "section_label": "Apollo",
+    "optional": false
+  },
+  {
+    "key": "exam_apollo",
+    "label": "Apollo",
+    "pr_keyword": null,
+    "type": "exam",
+    "section": "Apollo",
+    "section_label": "Apollo",
+    "optional": false
+  },
+  {
     "key": "A-git",
     "label": "Git",
     "pr_keyword": "Module A",
@@ -13,6 +31,15 @@
     "label": "Python Basics",
     "pr_keyword": "Module B - Python Basics",
     "type": "exercise",
+    "section": "B",
+    "section_label": "B - Python",
+    "optional": false
+  },
+  {
+    "key": "exam_python",
+    "label": "Python",
+    "pr_keyword": null,
+    "type": "exam",
     "section": "B",
     "section_label": "B - Python",
     "optional": false
@@ -36,15 +63,6 @@
     "optional": false
   },
   {
-    "key": "exam_python",
-    "label": "Python",
-    "pr_keyword": null,
-    "type": "exam",
-    "section": "B",
-    "section_label": "B - Python",
-    "optional": false
-  },
-  {
     "key": "exam_pandas_numpy",
     "label": "NumPy+Pandas",
     "pr_keyword": null,
@@ -57,7 +75,7 @@
     "key": "C-statistics",
     "label": "Statistics",
     "pr_keyword": "Module C",
-    "type": "exercise",
+    "type": "assignment",
     "section": "C",
     "section_label": "C - Statistics",
     "optional": false
@@ -76,6 +94,15 @@
     "label": "Regression",
     "pr_keyword": "Module D - Regression",
     "type": "exercise",
+    "section": "D",
+    "section_label": "D - ML",
+    "optional": false
+  },
+  {
+    "key": "exam_regression",
+    "label": "Regression",
+    "pr_keyword": null,
+    "type": "exam",
     "section": "D",
     "section_label": "D - ML",
     "optional": false
@@ -114,6 +141,51 @@
     "type": "exam",
     "section": "D",
     "section_label": "D - ML",
+    "optional": false
+  },
+  {
+    "key": "E-anomaly",
+    "label": "Anomaly Detection",
+    "pr_keyword": "Module E - Anomaly",
+    "type": "exercise",
+    "section": "E",
+    "section_label": "E - Deep Learning",
+    "optional": false
+  },
+  {
+    "key": "E-generative",
+    "label": "Generative Models",
+    "pr_keyword": "Module E - Generative",
+    "type": "exercise",
+    "section": "E",
+    "section_label": "E - Deep Learning",
+    "optional": false
+  },
+  {
+    "key": "E-loss-splits",
+    "label": "Loss & Train Splits",
+    "pr_keyword": "Module E - Loss",
+    "type": "exercise",
+    "section": "E",
+    "section_label": "E - Deep Learning",
+    "optional": false
+  },
+  {
+    "key": "E-part1-2",
+    "label": "Part 1 + Part 2",
+    "pr_keyword": "Module E - Part",
+    "type": "exercise",
+    "section": "E",
+    "section_label": "E - Deep Learning",
+    "optional": false
+  },
+  {
+    "key": "exam_deep",
+    "label": "Deep Learning",
+    "pr_keyword": null,
+    "type": "exam",
+    "section": "E",
+    "section_label": "E - Deep Learning",
     "optional": false
   },
   {
