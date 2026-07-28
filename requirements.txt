@@ -1,0 +1,36 @@
+# Core data science packages
+numpy>=2.5.0
+pandas>=3.0.0
+matplotlib>=3.11.0
+scipy>=1.18.0
+scikit-learn>=1.5.0
+
+# Deep Learning & Neural Networks
+# Note: TensorFlow and PyTorch don't have Python 3.14 support yet
+# tensorflow>=2.8.0
+# keras>=2.8.0
+# torch>=1.10.0
+# torchvision>=0.11.0
+
+# Machine Learning & Explainability
+# shap and xgboost don't support Python 3.14 yet
+
+# Computer Vision
+opencv-python>=4.9.0
+
+# API and utilities
+requests>=2.32.0
+
+# Jupyter notebook support
+jupyter>=1.0.0
+ipython>=8.0.0
+notebook>=7.0.0
+pytest>=8.0.0
+
+# Visualization & Documentation
+seaborn>=0.13.0
+
+# PDF preview auditing
+pdfplumber>=0.11.0
+pymupdf>=1.25.0
+playwright>=1.50.0
