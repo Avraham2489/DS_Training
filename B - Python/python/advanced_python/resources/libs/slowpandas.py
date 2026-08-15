@@ -6,7 +6,7 @@ slow_factor = 0.1
 
 def do_slow_stuff(output_func):
     l = 5.0 / slow_factor
-    for i in xrange(int(l)):
+    for i in range(int(l)):
         output_func(i / l)
         time.sleep(slow_factor)
     output_func(1.0)
