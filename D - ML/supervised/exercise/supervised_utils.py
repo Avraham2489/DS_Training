@@ -5,7 +5,6 @@ from collections.abc import Callable
 import numpy as np
 from numpy.typing import NDArray
 
-
 def make_local_weight_function(
     *, reference_sample: NDArray[np.floating],
 ) -> Callable[..., NDArray[np.floating]]:
